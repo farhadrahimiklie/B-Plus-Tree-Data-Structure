@@ -5,11 +5,12 @@
 #define T 2
 #define MIN_KEYS (T-1)
 #define MAX_KEYS (2*T-1)
+#define CHILDREN (2*T)
 
 typedef struct Node{
     int keys[MAX_KEYS];
     int values[MAX_KEYS]; // only valid if leaf
-    struct Node* children[2*T];
+    struct Node* children[CHILDREN];
     struct Node* next; // leaf-level linked list
     int n;
     bool is_leaf;
@@ -25,7 +26,7 @@ Node* CreateNode(bool leaf){
         newNode->keys[i] = 0;
     }
 
-    for(int j = 0; j < 2*T; j++){
+    for(int j = 0; j < CHILDREN; j++){
         newNode->children[j] = NULL;
     }
 
@@ -111,7 +112,7 @@ void insertNonFull(Node* node, int key, int value){
             index--;
         }
         index++;
-        if(node->children[index]->n == 2*T-1){
+        if(node->children[index]->n == MAX_KEYS){
             SplitChild(node, index, node->children[index]);
             if(key > node->keys[index]){
                 index++;
@@ -292,12 +293,12 @@ int main(){
     printf("\n");
 
 
-    //int value;
-    //if(Search(root, 12, &value)){
-        //printf("Found 12-> %d\n", value);
-    //}else{
-        //printf("Not Found\n");
-    //}
+    int value;
+    if(Search(root, 12, &value)){
+        printf("Found 12-> %d\n", value);
+    }else{
+        printf("Not Found\n");
+    }
 
     printf("Before Delete: \n");
     Traversal(root); printf("\n");
