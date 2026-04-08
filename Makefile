@@ -1,7 +1,6 @@
 CC      = gcc
 CSTD    = c18
 TARGET  = main
-
 # -fsanitize=address,undefined -O0 \
 
 CFLAGS  = -g -Wall -Wextra -Wpedantic -Werror \
@@ -11,16 +10,15 @@ CFLAGS  = -g -Wall -Wextra -Wpedantic -Werror \
 SRC     = $(wildcard *.c)
 OBJ     = $(SRC:.c=.o)
 
-
 all: $(TARGET)
 
 $(TARGET): $(OBJ)
 	$(CC) $(CFLAGS) $(OBJ) -o $(TARGET)
 	rm -f $(OBJ)
 
+# fix pattern rule for src/
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@
-
 
 clean:
 	rm -f $(TARGET) $(OBJ)
